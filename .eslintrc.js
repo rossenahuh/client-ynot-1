@@ -1,5 +1,5 @@
 module.exports = {
-	extends: 'standard',
+	extends: 'react-app',
 	rules: {
 		'no-undef-init': 0,
 		semi: [ 2, 'always' ],
