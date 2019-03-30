@@ -4,16 +4,20 @@ import TodayReview from './TodayReview';
 import RecentActivity from './RecentActivity';
 import Search from './Search';
 
+const GOOGLEMAPAPIKEY = 'AIzaSyBCXHmnzN86txpvCJnC6Z5h_-DUiBRVYgE';
 class Main extends Component {
 	constructor() {
 		super();
 
 		this.state = {
-			reviewOfTheDay: 'null',
-			recentActivityList: [],
-			searchInput: 'HI',
-			searchResult: []
+			reviewOfTheDay: null,
+			recentActivityList: null,
+			searchInput: null,
+			searchResult: null,
+			error: null
 		};
+		this._fetchMatchingDataToSearchInput = this._fetchMatchingDataToSearchInput.bind(this);
+		this._triggerFetchWithClick = this._triggerFetchWithClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -57,19 +61,77 @@ class Main extends Component {
 		});
 	}
 
+	_fetchMatchingDataToSearchInput() {
+		let location = this.state.searchInput;
+		fetch(`http://localhost:3000/restaurants?location=${location}`).then((res) => res.json()).then((json) => {
+			this.setState({
+				searchResult: json
+			});
+		});
+	}
+	_triggerFetchWithClick() {
+		this._fetchMatchingDataToSearchInput();
+	}
+	_triggerFetchWithEnter(e) {
+		if (e.key === 'Enter') {
+			this._fetchMatchingDataToSearchInput();
+		}
+	}
+	_fetchMatchingDataToSearchInput2(location) {
+		fetch(`http://localhost:3000/restaurants?location=${location}`).then((res) => res.json()).then((json) => {
+			this.setState({
+				searchResult: json
+			});
+		});
+	}
+
+	_getAddressOfCurrentLocation(lat, lon) {
+		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${GOOGLEMAPAPIKEY}`)
+			.then((res) => res.json())
+			.then((json) =>
+				this._fetchMatchingDataToSearchInput2(json.plus_code.compound_code.split(' ')[2].slice(0, 2))
+			);
+	}
+	_triggerFetchRestaurantsNearby = () => {
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				console.log(position);
+
+				this._getAddressOfCurrentLocation(position.coords.latitude, position.coords.longitude);
+			},
+			(error) => this.setState({ error: error })
+		);
+	};
 	render() {
-		const { reviewOfTheDay, recentActivityList, searchInput } = this.state;
+		const { reviewOfTheDay, recentActivityList, searchResult } = this.state;
 		return reviewOfTheDay && recentActivityList ? (
 			<div>
 				<header>
 					<div>
 						<button>login</button>
 						<button>logout</button>
-						<Search onChange={(e) => this._updateSearchInput(e)} />
-						{/* <SearchBar onhange={(e) => this._updateSearchInput(e)} /> */}
+						<Search
+							onChange={(e) => this._updateSearchInput(e)}
+							onClick={this._triggerFetchWithClick}
+							onKeyPress={(e) => this._triggerFetchWithEnter(e)}
+						/>
+						<button onClick={this._triggerFetchRestaurantsNearby}>Current Location</button>
 					</div>
 				</header>
-				<div>SEARCH RESULT::: {searchInput}</div>
+				{searchResult ? (
+					searchResult.map((restaurant) => (
+						<div>
+							<span>
+								<img src={restaurant.photo} alt={restaurant.name} />
+							</span>
+							<span>
+								<div>{restaurant.name}</div>
+								<div>별점</div>
+								<div>comment::: {restaurant.reviewID}</div>
+							</span>
+						</div>
+					))
+				) : null}
 				<LocationRecommendation />
 				<TodayReview reviewOfTheDay={reviewOfTheDay} />
 				<RecentActivity recentActivityList={recentActivityList} />

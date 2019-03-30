@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Search({ onChange }) {
+function Search({ onChange, onClick, onKeyPress }) {
 	return (
 		<div>
-			<input onChange={onChange} />
-			<button>Search</button>
+			<input onChange={onChange} onKeyPress={onKeyPress} />
+			<button onClick={onClick}>Search</button>
 		</div>
 	);
 }
