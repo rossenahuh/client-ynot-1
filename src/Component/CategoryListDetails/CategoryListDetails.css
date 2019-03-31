@@ -1,0 +1,13 @@
+.ItemWrapper {
+	display: flex;
+	width: 630px;
+	height: 210px;
+	border: 1px solid black;
+}
+.itemImg {
+	width: 210px;
+	height: 210px;
+}
+p {
+	margin: 0;
+}
