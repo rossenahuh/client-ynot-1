@@ -6,6 +6,7 @@
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
 		"react-dropdown": "^1.6.4",
+		"react-router-dom": "^5.0.0",
 		"react-scripts": "2.1.8",
 		"settings": "^0.1.1"
 	},
@@ -15,7 +16,12 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
-	"browserslist": [ ">0.2%", "not dead", "not ie <= 11", "not op_mini all" ],
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	],
 	"devDependencies": {
 		"eslint-config-prettier": "^4.1.0",
 		"eslint-config-standard": "^12.0.0",

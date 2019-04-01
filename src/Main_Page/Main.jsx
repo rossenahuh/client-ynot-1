@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LocationRecommendation from './LocationRecommendation';
-import TodayReview from './TodayReview';
+import TodayReview from '../TodayReview';
 import RecentActivity from './RecentActivity';
 import Search from './Search';
 
@@ -38,7 +38,7 @@ class Main extends Component {
 		let date = new Date().toISOString().slice(0, 10);
 		fetch(`http://localhost:3000/reviews?date=${date}`).then((res) => res.json()).then((json) => {
 			let result = json.reduce(this._pickTheReviewOfTheDay);
-
+			console.log(result);
 			this.setState({
 				reviewOfTheDay: result
 			});
