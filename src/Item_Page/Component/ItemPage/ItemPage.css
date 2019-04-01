@@ -1,0 +1,21 @@
+#ItemPgWrapper {
+	padding: 0 20% 0 20%;
+}
+#ItemPgHeader {
+	display: flex;
+	border: 1px solid lightgray;
+}
+#IPHtitle {
+	padding-right: 150px;
+	border-right: 1px solid lightgray;
+}
+#mapAndPhoto {
+	display: flex;
+	border: 1px solid lightgray;
+}
+#mapWrapper {
+	border-right: 1px solid lightgray;
+}
+#revHeader {
+	border: 1px solid lightgray;
+}
