@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Search({ onChange, onClick, onKeyPress }) {
+function Search({ onChange, onClick, onKeyPress, searchInput }) {
 	return (
 		<div>
 			<input onChange={onChange} onKeyPress={onKeyPress} />
-			<button onClick={onClick}>Search</button>
+			<Link to={`/search/${searchInput}`}>
+				<button onClick={onClick}>Search</button>
+			</Link>
 		</div>
 	);
 }

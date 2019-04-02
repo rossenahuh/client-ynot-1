@@ -14,7 +14,7 @@ const ItemPage = (props) => (
 				<a href="#">food styles</a>
 			</div>
 			<div>
-				<Link to="/review">
+				<Link to={`/review/${props.id}`}>
 					<button>Write a Review</button>
 				</Link>
 				<button>Add Photo</button>

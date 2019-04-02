@@ -15,11 +15,17 @@ class CategoryList extends Component {
 	}
 
 	componentDidMount() {
-		fetch('http://localhost:3000/restaurants')
+		this.getResLocation(this.props.location);
+	}
+
+	getResLocation(location) {
+		console.log(location);
+		fetch(`http://localhost:3000/restaurants?location=${location}`)
 			.then((res) => {
 				return res.json();
 			})
 			.then((json) => {
+				console.log(json);
 				this.setState({
 					restaurant: json
 				});

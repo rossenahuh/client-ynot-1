@@ -73,8 +73,10 @@ class Main extends Component {
 		this._fetchMatchingDataToSearchInput();
 	}
 	_triggerFetchWithEnter(e) {
+		console.log(e.key);
+		const { history } = this.props;
 		if (e.key === 'Enter') {
-			this._fetchMatchingDataToSearchInput();
+			history.push(`/search/${this.state.searchInput}`);
 		}
 	}
 	_fetchMatchingDataToSearchInput2(location) {
@@ -114,6 +116,7 @@ class Main extends Component {
 							onChange={(e) => this._updateSearchInput(e)}
 							onClick={this._triggerFetchWithClick}
 							onKeyPress={(e) => this._triggerFetchWithEnter(e)}
+							searchInput={this.state.searchInput}
 						/>
 						<button onClick={this._triggerFetchRestaurantsNearby}>Current Location</button>
 					</div>

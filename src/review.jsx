@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 class Reviews extends Component {
 	state = {
@@ -13,18 +12,27 @@ class Reviews extends Component {
 	};
 
 	sendReview(text) {
+		const data = {
+			id: '104',
+			userID: '12',
+			restaurantID: '5',
+			comment: text,
+			rating: 5,
+			date: '2019-04-02'
+		};
+
 		fetch('http://localhost:3000/reviews', {
 			method: 'POST',
-			body: JSON.stringify(text),
+			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		})
-			.then((res) => res.json())
-			.then((response) => console.log('Success:', JSON.stringify(response)));
+		});
 	}
 
 	render() {
+		const { history, match } = this.props;
+		console.log(this.props);
 		return (
 			<form>
 				<input
@@ -34,9 +42,14 @@ class Reviews extends Component {
 						this.setState({ text: e.target.value });
 					}}
 				/>
-				{/* <Link to={`/item/${props.id}`}> */}
-				<button onClick={(e) => this.onSubmit(e)}>Post Review</button>
-				{/* </Link> */}
+				<button
+					onClick={(e) => {
+						this.onSubmit(e);
+						history.push(`/item/${match.params.itemId}`);
+					}}
+				>
+					Post Review
+				</button>
 			</form>
 		);
 	}

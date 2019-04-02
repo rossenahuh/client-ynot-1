@@ -10,7 +10,7 @@ class SearchPage extends Component {
 		return (
 			<div className="">
 				<Header />
-				<CategoryList />
+				<CategoryList location={this.props.match.params.location} />
 				<Footer />
 			</div>
 		);
