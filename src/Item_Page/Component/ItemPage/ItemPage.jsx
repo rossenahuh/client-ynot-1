@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import StarRating from '../StarRating';
 import ItemMap from '../ItemMap';
 import ItemReview from '../ItemReview';
@@ -13,7 +14,9 @@ const ItemPage = (props) => (
 				<a href="#">food styles</a>
 			</div>
 			<div>
-				<button>Write a Review</button>
+				<Link to={`/review/${props.id}`}>
+					<button>Write a Review</button>
+				</Link>
 				<button>Add Photo</button>
 			</div>
 		</div>
@@ -27,7 +30,7 @@ const ItemPage = (props) => (
 			<div id="revHeader">
 				<h1>Recommended Reviews for ItemName</h1>
 				<input />
-				<button />
+				<button>검색</button>
 				<span>Sort by</span>
 				<select>
 					<option>Yelp Sort</option>
@@ -41,7 +44,7 @@ const ItemPage = (props) => (
 					<option>English</option>
 				</select>
 			</div>
-			<ItemReview />
+			<ItemReview id={props.id} />
 		</div>
 	</div>
 );

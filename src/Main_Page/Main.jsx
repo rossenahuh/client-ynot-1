@@ -38,7 +38,7 @@ class Main extends Component {
 		let date = new Date().toISOString().slice(0, 10);
 		fetch(`http://localhost:3000/reviews?date=${date}`).then((res) => res.json()).then((json) => {
 			let result = json.reduce(this._pickTheReviewOfTheDay);
-
+			console.log(result);
 			this.setState({
 				reviewOfTheDay: result
 			});
@@ -73,8 +73,10 @@ class Main extends Component {
 		this._fetchMatchingDataToSearchInput();
 	}
 	_triggerFetchWithEnter(e) {
+		console.log(e.key);
+		const { history } = this.props;
 		if (e.key === 'Enter') {
-			this._fetchMatchingDataToSearchInput();
+			history.push(`/search/${this.state.searchInput}`);
 		}
 	}
 	_fetchMatchingDataToSearchInput2(location) {
@@ -114,6 +116,7 @@ class Main extends Component {
 							onChange={(e) => this._updateSearchInput(e)}
 							onClick={this._triggerFetchWithClick}
 							onKeyPress={(e) => this._triggerFetchWithEnter(e)}
+							searchInput={this.state.searchInput}
 						/>
 						<button onClick={this._triggerFetchRestaurantsNearby}>Current Location</button>
 					</div>
