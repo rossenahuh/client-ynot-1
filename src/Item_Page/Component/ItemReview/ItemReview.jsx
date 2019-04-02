@@ -6,26 +6,16 @@ class ItemReview extends Component {
 	constructor() {
 		super();
 		this.state = {
-			resData: null,
 			revData: null
 		};
 	}
 
 	componentDidMount() {
-		this.fetchAllRestaurant();
-		this.getReviews();
+		this.getReviews(this.props.id);
 	}
 
-	fetchAllRestaurant() {
-		fetch(`http://localhost:3000/restaurants`).then((res) => res.json()).then((json) => {
-			this.setState({
-				resData: json
-			});
-		});
-	}
-
-	getReviews() {
-		fetch(`http://localhost:3000/reviews?restaurantID=2`).then((res) => res.json()).then((json) => {
+	getReviews(id) {
+		fetch(`http://localhost:3000/reviews?restaurantID=${id}`).then((res) => res.json()).then((json) => {
 			this.setState({
 				revData: json
 			});

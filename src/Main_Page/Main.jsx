@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LocationRecommendation from './LocationRecommendation';
-import TodayReview from '../TodayReview';
+import TodayReview from './TodayReview';
 import RecentActivity from './RecentActivity';
 import Search from './Search';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import StarRating from '../StarRating';
 import './CategoryListDetails.css';
 
@@ -8,7 +9,7 @@ const CategoryListDetails = (props) => (
 		<div className="itemInfo">
 			<div>
 				<div>
-					<p>{props.item.name}</p>
+					<Link to={`/item/${props.item.id}`}>{props.item.name}</Link>
 					<StarRating />
 					<p>$$ British, Fish & Chips, Seafood</p>
 				</div>
