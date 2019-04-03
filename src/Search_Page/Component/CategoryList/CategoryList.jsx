@@ -8,22 +8,16 @@ class CategoryList extends Component {
 		this.state = {
 			restaurant: [],
 			currentPage: 1,
-			itemsPerPage: 2
+			itemsPerPage: 6
 		};
 
 		this.handleClick = this.handleClick.bind(this);
 	}
 
 	componentDidMount() {
-		this.getResLocation(this.props.location);
-	}
-
-	getResLocation(location) {
-		console.log(location);
-		fetch(`http://localhost:3000/restaurants?location=${location}`)
-			.then((res) => {
-				return res.json();
-			})
+		// this.getResLocation(this.props.location);
+		fetch(`http://localhost:3002/api/restaurants/nearby?district=${this.props.location}`)
+			.then((res) => res.json())
 			.then((json) => {
 				console.log(json);
 				this.setState({
