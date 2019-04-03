@@ -7,6 +7,7 @@ import './SearchPage.css';
 
 class SearchPage extends Component {
 	render() {
+		console.log(this.props.match.params.location);
 		return (
 			<div className="">
 				<Header />

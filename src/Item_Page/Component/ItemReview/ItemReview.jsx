@@ -11,25 +11,25 @@ class ItemReview extends Component {
 	}
 
 	componentDidMount() {
-		this.getReviews(this.props.id);
+		this.getReviews();
 	}
 
-	getReviews(id) {
-		fetch(`http://localhost:3000/reviews?restaurantID=${id}`).then((res) => res.json()).then((json) => {
-			this.setState({
-				revData: json
+	getReviews() {
+		fetch(`http://localhost:3002/api/restaurants/infoabout?id=${this.props.id}`)
+			.then((res) => res.json())
+			.then((json) => {
+				this.setState({
+					revData: json
+				});
+				console.log(json);
 			});
-			console.log(this.state.revData);
-		});
 	}
 
 	render() {
+		const { revData } = this.state;
+		console.log(revData);
 		return (
-			<div>
-				{this.state.revData !== null ? (
-					this.state.revData.map((review) => <ItemReviewDetails review={review} />)
-				) : null}
-			</div>
+			<div>{revData !== null ? [ revData ].map((review) => <ItemReviewDetails review={review} />) : null}</div>
 		);
 	}
 }

@@ -14,46 +14,47 @@ class Main extends Component {
 			recentActivityList: null,
 			searchInput: null,
 			searchResult: null,
-			error: null
+			error: null,
+			currentLoc: null
 		};
 		this._fetchMatchingDataToSearchInput = this._fetchMatchingDataToSearchInput.bind(this);
 		this._triggerFetchWithClick = this._triggerFetchWithClick.bind(this);
 	}
 
 	componentDidMount() {
+		fetch('http://localhost:3002/generateData').then((res) => res.json()).then((json) => {
+			console.log(json);
+		});
 		this._getTodayReview();
 		this._getTop9RecentActivities();
+		this._triggerFetchRestaurantsNearby();
 	}
 
 	_getTop9RecentActivities() {
-		fetch('http://localhost:3000/reviews').then((res) => res.json()).then((json) => {
-			let top9Latest = json.reverse().slice(0, 9);
+		fetch('http://localhost:3002/api/activities/recentlyCreated').then((res) => res.json()).then((json) => {
 			this.setState({
-				recentActivityList: top9Latest
+				recentActivityList: json
 			});
 		});
 	}
 
 	_getTodayReview() {
-		let date = new Date().toISOString().slice(0, 10);
-		fetch(`http://localhost:3000/reviews?date=${date}`).then((res) => res.json()).then((json) => {
-			let result = json.reduce(this._pickTheReviewOfTheDay);
-			console.log(result);
+		fetch(`http://localhost:3002/api/reviews/reviewoftheday`).then((res) => res.json()).then((json) => {
 			this.setState({
-				reviewOfTheDay: result
+				reviewOfTheDay: [ json ]
 			});
 		});
 	}
 
-	_pickTheReviewOfTheDay(acc, cur) {
-		if (acc.rating > cur.rating) {
-			return acc;
-		} else if (acc.rating === cur.rating) {
-			return acc.comment.length > cur.comment.length ? acc : cur;
-		} else {
-			return cur;
-		}
-	}
+	// _pickTheReviewOfTheDay(acc, cur) {
+	// 	if (acc.rating > cur.rating) {
+	// 		return acc;
+	// 	} else if (acc.rating === cur.rating) {
+	// 		return acc.comment.length > cur.comment.length ? acc : cur;
+	// 	} else {
+	// 		return cur;
+	// 	}
+	// }
 
 	_updateSearchInput(e) {
 		this.setState({
@@ -63,7 +64,7 @@ class Main extends Component {
 
 	_fetchMatchingDataToSearchInput() {
 		let location = this.state.searchInput;
-		fetch(`http://localhost:3000/restaurants?location=${location}`).then((res) => res.json()).then((json) => {
+		fetch(`http://localhost:3002/api/restaurants?district=${location}`).then((res) => res.json()).then((json) => {
 			this.setState({
 				searchResult: json
 			});
@@ -79,20 +80,27 @@ class Main extends Component {
 			history.push(`/search/${this.state.searchInput}`);
 		}
 	}
-	_fetchMatchingDataToSearchInput2(location) {
-		fetch(`http://localhost:3000/restaurants?location=${location}`).then((res) => res.json()).then((json) => {
-			this.setState({
-				searchResult: json
-			});
-		});
-	}
+	// _fetchMatchingDataToSearchInput2(location) {
+	// 	fetch(`http://localhost:3002/api/restaurants?district=${location}`).then((res) => res.json()).then((json) => {
+	// 		console.log(json);
+	// 		this.setState({
+	// 			searchResult: json
+	// 		});
+	// 	});
+	// }
 
 	_getAddressOfCurrentLocation(lat, lon) {
 		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${GOOGLEMAPAPIKEY}`)
 			.then((res) => res.json())
-			.then((json) =>
-				this._fetchMatchingDataToSearchInput2(json.plus_code.compound_code.split(' ')[2].slice(0, 2))
-			);
+			.then((json) => {
+				// console.log(json);
+				// this._fetchMatchingDataToSearchInput2(json.results[0].formatted_address.slice(11, 2));
+				// this._fetchMatchingDataToSearchInput2(`성수`);
+				this.setState({
+					currentLoc: '성수'
+				});
+				// console.log(json.results[0].formatted_address.slice(11, 2));
+			});
 	}
 	_triggerFetchRestaurantsNearby = () => {
 		navigator.geolocation.getCurrentPosition(
@@ -105,7 +113,8 @@ class Main extends Component {
 		);
 	};
 	render() {
-		const { reviewOfTheDay, recentActivityList, searchResult } = this.state;
+		const { reviewOfTheDay, recentActivityList, searchResult, currentLoc } = this.state;
+		const { history } = this.props;
 		return reviewOfTheDay && recentActivityList ? (
 			<div>
 				<header>
@@ -118,7 +127,14 @@ class Main extends Component {
 							onKeyPress={(e) => this._triggerFetchWithEnter(e)}
 							searchInput={this.state.searchInput}
 						/>
-						<button onClick={this._triggerFetchRestaurantsNearby}>Current Location</button>
+						<button
+							onClick={() => {
+								this._triggerFetchRestaurantsNearby();
+								history.push(`/search/${currentLoc}`);
+							}}
+						>
+							Current Location
+						</button>
 					</div>
 				</header>
 				{searchResult ? (

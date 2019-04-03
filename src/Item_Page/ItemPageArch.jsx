@@ -5,7 +5,7 @@ import Footer from './Component/Footer';
 
 class ItemPageArch extends Component {
 	render() {
-		const { history, match } = this.props;
+		const { match } = this.props;
 		console.log(match.params.itemId);
 		return (
 			<div className="">
