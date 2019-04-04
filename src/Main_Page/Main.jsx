@@ -3,8 +3,9 @@ import LocationRecommendation from './LocationRecommendation';
 import TodayReview from './TodayReview';
 import RecentActivity from './RecentActivity';
 import Search from './Search';
+import configs from '../config/config.json';
 
-const GOOGLEMAPAPIKEY = 'AIzaSyBCXHmnzN86txpvCJnC6Z5h_-DUiBRVYgE';
+const GOOGLEMAPAPIKEY = configs.GOOGLEMAPAPIKEY;
 class Main extends Component {
 	constructor() {
 		super();
