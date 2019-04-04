@@ -93,13 +93,9 @@ class Main extends Component {
 		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${GOOGLEMAPAPIKEY}`)
 			.then((res) => res.json())
 			.then((json) => {
-				// console.log(json);
-				// this._fetchMatchingDataToSearchInput2(json.results[0].formatted_address.slice(11, 2));
-				// this._fetchMatchingDataToSearchInput2(`성수`);
 				this.setState({
-					currentLoc: '성수'
+					currentLoc: json.results[0].formatted_address.slice(11, 13)
 				});
-				// console.log(json.results[0].formatted_address.slice(11, 2));
 			});
 	}
 	_triggerFetchRestaurantsNearby = () => {
