@@ -11,11 +11,21 @@ class LocationRecommendation extends Component {
 		this._getLocationData = this._getLocationData.bind(this);
 	}
 
+	componentDidMount() {
+		fetch(`http://localhost:3002/api/restaurants/nearby?district=성수`).then((res) => res.json()).then((json) => {
+			console.log(json);
+			this.setState({
+				current: json
+			});
+		});
+	}
+
 	_getLocationData(e) {
 		console.log(e.target.innerHTML);
 		fetch(`http://localhost:3002/api/restaurants/nearby?district=${e.target.innerHTML}`)
 			.then((res) => res.json())
 			.then((json) => {
+				console.log(json);
 				this.setState({
 					current: json
 				});
