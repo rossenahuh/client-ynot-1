@@ -6,7 +6,8 @@ class LocationRecommendation extends Component {
 		super();
 
 		this.state = {
-			current: []
+			current: [],
+			arrForRating: []
 		};
 		this._getLocationData = this._getLocationData.bind(this);
 	}
