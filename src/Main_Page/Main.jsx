@@ -16,16 +16,20 @@ class Main extends Component {
 			searchInput: null,
 			searchResult: null,
 			error: null,
-			currentLoc: null
+			currentLoc: null,
+			generateData: false
 		};
 		this._fetchMatchingDataToSearchInput = this._fetchMatchingDataToSearchInput.bind(this);
 		this._triggerFetchWithClick = this._triggerFetchWithClick.bind(this);
 	}
 
 	componentDidMount() {
-		fetch('http://localhost:3002/generateData').then((res) => res.json()).then((json) => {
-			console.log(json);
-		});
+		if (!this.state.generateData) {
+			fetch('http://localhost:3002/generateData');
+			this.setState({
+				generateData: true
+			});
+		}
 		this._getTodayReview();
 		this._getTop9RecentActivities();
 		this._triggerFetchRestaurantsNearby();
