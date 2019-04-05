@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function RestaurantsInfo({ current }) {
-	console.log(current);
-	return current.map((restaurant) => (
-		<div>
-			<img src={restaurant.src} alt={restaurant.name} />
-			<div>{restaurant.name}</div>
-			<div>{restaurant.name}</div>
-			<div>{restaurant.address}</div>
-		</div>
-	));
+class RestaurantsInfo extends Component {
+	constructor() {
+		super();
+		this.state = {};
+	}
+
+	render() {
+		console.log(this.props.current);
+		return this.props.current.map((restaurant, index) => (
+			<div>
+				<img src={restaurant.src} alt={restaurant.name} />
+				<div>{restaurant.name}</div>
+				<div>{restaurant.averageRating}</div>
+				<div>{restaurant.address}</div>
+			</div>
+		));
+	}
 }
 
 export default RestaurantsInfo;

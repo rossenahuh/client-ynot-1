@@ -5,7 +5,7 @@ import './CategoryListDetails.css';
 
 const CategoryListDetails = (props) => (
 	<div className="ItemWrapper">
-		<img src={props.item.photo} className="itemImg" />
+		<img src={props.item.src} className="itemImg" />
 		<div className="itemInfo">
 			<div>
 				<div>

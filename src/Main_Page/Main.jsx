@@ -46,16 +46,6 @@ class Main extends Component {
 		});
 	}
 
-	getAverageRating(id) {
-		fetch(`http://localhost:3002/api/reviews/averageRating?restaurantID=${id}`)
-			.then((res) => res.json())
-			.then((json) => {
-				this.setState({
-					reviewOfTheDay: [ json ]
-				});
-			});
-	}
-
 	// _pickTheReviewOfTheDay(acc, cur) {
 	// 	if (acc.rating > cur.rating) {
 	// 		return acc;
