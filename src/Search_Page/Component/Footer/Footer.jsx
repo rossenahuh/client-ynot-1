@@ -6,7 +6,7 @@ export default class Footer extends Component {
 		return (
 			<div className="footerWrapper">
 				<ul className="footerUl">
-					About
+					<li className="footerTitle">About</li>
 					<li>
 						<a href="#">About Yelp</a>
 					</li>
@@ -30,7 +30,7 @@ export default class Footer extends Component {
 					</li>
 				</ul>
 				<ul className="footerUl">
-					Discover
+					<li className="footerTitle">Discover</li>
 					<li>
 						<a href="#">Yelp Project Cost Guides</a>
 					</li>
@@ -54,7 +54,7 @@ export default class Footer extends Component {
 					</li>
 				</ul>
 				<ul className="footerUl">
-					Yelp for Business Owners
+					<li className="footerTitle">Yelp for Business Owners</li>
 					<li>
 						<a href="#">Claim your Business Page</a>
 					</li>

@@ -3,7 +3,27 @@ import LocationRecommendation from './LocationRecommendation';
 import TodayReview from './TodayReview';
 import RecentActivity from './RecentActivity';
 import Search from './Search';
+import Footer from '../Search_Page/Component/Footer/Footer';
 import configs from '../config/config.json';
+import './Main.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+	Button,
+	ButtonGroup,
+	Container,
+	Row,
+	Col,
+	CardColumns,
+	Spinner,
+	Modal,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	ModalHeader,
+	ModalBody,
+	ModalFooter
+} from 'reactstrap';
 
 const GOOGLEMAPAPIKEY = configs.GOOGLEMAPAPIKEY;
 class Main extends Component {
@@ -17,22 +37,23 @@ class Main extends Component {
 			searchResult: null,
 			error: null,
 			currentLoc: null,
-			generateData: false
+			loginModalOpen: false
 		};
 		this._fetchMatchingDataToSearchInput = this._fetchMatchingDataToSearchInput.bind(this);
 		this._triggerFetchWithClick = this._triggerFetchWithClick.bind(this);
+		this._loginModalToggle = this._loginModalToggle.bind(this);
 	}
 
 	componentDidMount() {
-		if (!this.state.generateData) {
-			fetch('http://localhost:3002/generateData');
-			this.setState({
-				generateData: true
-			});
-		}
 		this._getTodayReview();
 		this._getTop9RecentActivities();
 		this._triggerFetchRestaurantsNearby();
+	}
+
+	_loginModalToggle() {
+		this.setState((prevState) => ({
+			loginModalOpen: !prevState.loginModalOpen
+		}));
 	}
 
 	_getTop9RecentActivities() {
@@ -50,16 +71,6 @@ class Main extends Component {
 			});
 		});
 	}
-
-	// _pickTheReviewOfTheDay(acc, cur) {
-	// 	if (acc.rating > cur.rating) {
-	// 		return acc;
-	// 	} else if (acc.rating === cur.rating) {
-	// 		return acc.comment.length > cur.comment.length ? acc : cur;
-	// 	} else {
-	// 		return cur;
-	// 	}
-	// }
 
 	_updateSearchInput(e) {
 		this.setState({
@@ -79,20 +90,12 @@ class Main extends Component {
 		this._fetchMatchingDataToSearchInput();
 	}
 	_triggerFetchWithEnter(e) {
-		console.log(e.key);
+		// console.log(e.key);
 		const { history } = this.props;
 		if (e.key === 'Enter') {
 			history.push(`/search/${this.state.searchInput}`);
 		}
 	}
-	// _fetchMatchingDataToSearchInput2(location) {
-	// 	fetch(`http://localhost:3002/api/restaurants?district=${location}`).then((res) => res.json()).then((json) => {
-	// 		console.log(json);
-	// 		this.setState({
-	// 			searchResult: json
-	// 		});
-	// 	});
-	// }
 
 	_getAddressOfCurrentLocation(lat, lon) {
 		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${GOOGLEMAPAPIKEY}`)
@@ -106,7 +109,7 @@ class Main extends Component {
 	_triggerFetchRestaurantsNearby = () => {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				console.log(position);
+				// console.log(position);
 
 				this._getAddressOfCurrentLocation(position.coords.latitude, position.coords.longitude);
 			},
@@ -114,33 +117,88 @@ class Main extends Component {
 		);
 	};
 	render() {
-		const { reviewOfTheDay, recentActivityList, searchResult, currentLoc } = this.state;
+		const { reviewOfTheDay, recentActivityList, searchResult, currentLoc, loginModalOpen } = this.state;
 		const { history } = this.props;
 		return reviewOfTheDay && recentActivityList ? (
-			<div>
-				<header>
-					<div>
-						<button>login</button>
-						<button>logout</button>
+			<Container className="Main-container" fluid>
+				<Col className="Main-Nav">
+					<Col className="Main-login-Bar">
+						<Row>
+							<Col className="Main-nav-menu">Review</Col>
+							<Col className="Main-nav-menu">Event</Col>
+							<Col className="Main-nav-menu">Talk</Col>
+						</Row>
+						<Row>
+							<ButtonGroup>
+								<Button size="sm" onClick={this._loginModalToggle} color="danger">
+									Log In
+								</Button>
+								<Button size="sm" color="danger">
+									Sign Up
+								</Button>
+							</ButtonGroup>
+							<Modal isOpen={loginModalOpen} toggle={this._loginModalToggle}>
+								<ModalHeader>Log In</ModalHeader>
+								<ModalBody>
+									<Form>
+										<FormGroup>
+											<Label for="exampleEmail">Email</Label>
+											<Input
+												type="email"
+												name="email"
+												id="exampleEmail"
+												placeholder="yelp-seoul@gamil.com"
+											/>
+										</FormGroup>
+										<FormGroup>
+											<Label for="examplePassword">Password</Label>
+											<Input
+												type="password"
+												name="password"
+												id="examplePassword"
+												placeholder="password placeholder"
+											/>
+										</FormGroup>
+									</Form>
+								</ModalBody>
+								<ModalFooter>
+									<Button color="danger" onClick={this.toggle}>
+										Log In
+									</Button>{' '}
+									<Button color="secondary" onClick={this.toggle}>
+										Cancel
+									</Button>
+								</ModalFooter>
+							</Modal>
+						</Row>
+					</Col>
+					<Col className="Main-logo">
+						<img
+							src="https://s3-media2.fl.yelpcdn.com/assets/srv0/styleguide/1ea40efd80f5/assets/img/brand_guidelines/yelp_fullcolor.png"
+							alt="yelp logo"
+						/>
+					</Col>
+					<Col className="Main-SearchBar">
 						<Search
 							onChange={(e) => this._updateSearchInput(e)}
 							onClick={this._triggerFetchWithClick}
 							onKeyPress={(e) => this._triggerFetchWithEnter(e)}
 							searchInput={this.state.searchInput}
-						/>
-						<button
+						/>{' '}
+						<Button
+							color="danger"
 							onClick={() => {
 								this._triggerFetchRestaurantsNearby();
 								history.push(`/search/${currentLoc}`);
 							}}
 						>
 							Current Location
-						</button>
-					</div>
-				</header>
+						</Button>
+					</Col>
+				</Col>
 				{searchResult ? (
 					searchResult.map((restaurant) => (
-						<div>
+						<Col>
 							<span>
 								<img src={restaurant.photo} alt={restaurant.name} />
 							</span>
@@ -149,16 +207,27 @@ class Main extends Component {
 								<div>별점</div>
 								<div>comment::: {restaurant.reviewID}</div>
 							</span>
-						</div>
+						</Col>
 					))
 				) : null}
-				<LocationRecommendation />
-				<TodayReview reviewOfTheDay={reviewOfTheDay} />
-				<RecentActivity recentActivityList={recentActivityList} />
-				{/* <Footer /> */}
-			</div>
+				<Col className="LR-wrapper">
+					<LocationRecommendation />
+				</Col>
+				<Col>
+					<TodayReview reviewOfTheDay={reviewOfTheDay} />
+				</Col>
+				<Col className="RA-wrapper">
+					<h5>Recent Activities</h5>
+					<CardColumns>
+						<RecentActivity recentActivityList={recentActivityList} />
+					</CardColumns>
+				</Col>
+				<Footer />
+			</Container>
 		) : (
-			<div>getting info...</div>
+			<div className="Spinner-wrap">
+				<Spinner className="Main-Spinner" color="danger" />
+			</div>
 		);
 	}
 }

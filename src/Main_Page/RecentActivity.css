@@ -1,0 +1,39 @@
+.RA-user-wrap {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 3px;
+}
+
+.RA-user-profile {
+	max-width: 15%;
+	max-height: 15%;
+	margin: 0 10px 0 5px;
+}
+
+.RA-context-highlight {
+	color: #2f73b5;
+	font-weight: 600;
+}
+
+.border-bottom {
+	border-bottom: 1px solid #efefef;
+	margin: 0px 10px 0px 5px;
+	padding-bottom: 5px;
+}
+
+.button-no-border {
+	border: transparent;
+	background-color: transparent;
+	color: black;
+	border-radius: 30px;
+}
+
+.margin-left {
+	margin-left: 10px;
+}
+
+.margin-bottom {
+	margin-bottom: 3px;
+}

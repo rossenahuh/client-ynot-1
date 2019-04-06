@@ -1,0 +1,23 @@
+.RI-card-img {
+	height: 60%;
+}
+
+.RI-card-title {
+	color: #2f73b5;
+	font-weight: 600;
+}
+
+.RI-card-subtitle {
+	display: flex;
+	align-items: center;
+}
+
+.RI-review-number {
+	color: #b4b4b4;
+	font-size: 13px;
+	margin-left: 5px;
+}
+
+.RI-card-text {
+	font-size: 14px;
+}

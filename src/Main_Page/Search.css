@@ -1,0 +1,11 @@
+input {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: transparent;
+	width: 100%;
+}
+
+.search-button {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}

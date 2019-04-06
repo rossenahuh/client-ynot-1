@@ -1,0 +1,48 @@
+.Main-container {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.Main-Nav {
+	background-image: url("https://blog.ferienparkspecials.de/wp-content/uploads/sites/16/2017/08/shutterstock_259774457.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 80vh;
+	color: white;
+	padding: 15px 30px 0 30px;
+	margin-bottom: 40px;
+	font-weight: 400;
+}
+
+.Main-nav-menu:hover {
+	border-bottom: 2px white solid;
+}
+
+.Main-login-Bar {
+	display: flex;
+	justify-content: space-between;
+}
+
+.Main-logo {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.Main-SearchBar {
+	text-align: center;
+}
+.RA-wrapper {
+	margin-top: 50px;
+}
+
+h5 {
+	color: red;
+	font-weight: 500;
+	margin-bottom: 30px;
+}
+
+.Spinner-wrap {
+	display: flex;
+	justify-content: center;
+}

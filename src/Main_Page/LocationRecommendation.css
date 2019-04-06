@@ -1,0 +1,15 @@
+h5 {
+	color: red;
+	text-align: center;
+}
+
+.LR-Nav {
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+
+.LR-preview {
+	margin-top: 30px;
+	max-height: 30%;
+}
