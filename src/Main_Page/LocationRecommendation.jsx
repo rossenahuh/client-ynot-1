@@ -2,19 +2,7 @@ import React, { Component } from 'react';
 import RestaurantsInfo from './RestaurantsInfo';
 import './LocationRecommendation.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-	Button,
-	ButtonGroup,
-	Container,
-	Row,
-	Col,
-	Spinner,
-	Nav,
-	NavItem,
-	CardDeck,
-	CardColumns,
-	CardGroup
-} from 'reactstrap';
+import { Button, CardDeck } from 'reactstrap';
 
 class LocationRecommendation extends Component {
 	constructor() {

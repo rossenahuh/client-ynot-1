@@ -13,15 +13,14 @@ class Reviews extends Component {
 
 	sendReview(text) {
 		const data = {
-			id: '104',
-			userID: '12',
-			restaurantID: '5',
+			id: 1,
+			userID: 1,
+			restaurantID: 1,
 			comment: text,
-			rating: 5,
-			date: '2019-04-02'
+			rating: 5
 		};
 
-		fetch('http://localhost:3000/reviews', {
+		fetch('http://localhost:3002/api/reviews', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
@@ -45,7 +44,7 @@ class Reviews extends Component {
 				<button
 					onClick={(e) => {
 						this.onSubmit(e);
-						history.push(`/item/${match.params.itemId}`);
+						history.push(`/restaurant/${match.params.restaurantID}`);
 					}}
 				>
 					Post Review

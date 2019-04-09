@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ButtonGroup, Button, Container, Row, Col } from 'reactstrap';
+import { ButtonGroup, Button } from 'reactstrap';
 import { Icon } from 'react-icons-kit';
 import { search } from 'react-icons-kit/icomoon/search';
 import './Search.css';

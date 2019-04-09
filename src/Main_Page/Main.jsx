@@ -3,7 +3,7 @@ import LocationRecommendation from './LocationRecommendation';
 import TodayReview from './TodayReview';
 import RecentActivity from './RecentActivity';
 import Search from './Search';
-import Footer from '../Search_Page/Component/Footer/Footer';
+import Footer from './Footer';
 import configs from '../config/config.json';
 import './Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './RecentActivity.css';
-import { Card, Button, CardImg, CardTitle, CardText, CardBody, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Card, Button, CardImg, CardTitle, CardText } from 'reactstrap';
 import { Icon } from 'react-icons-kit';
 import { notification, grin, cool } from 'react-icons-kit/icomoon';
 

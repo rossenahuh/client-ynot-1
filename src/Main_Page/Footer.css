@@ -1,0 +1,28 @@
+.footerWrapper {
+	display: flex;
+	justify-content: space-evenly;
+	background-color: #efefef;
+	border-top: 0.5px solid #ccc;
+	padding-bottom: 70px;
+	margin-top: 70px;
+}
+.title {
+	font-size: 15px;
+	color: red;
+	font-weight: 500;
+	margin-bottom: 15px;
+	margin-top: 40px;
+}
+.footerUl li {
+	list-style: none;
+}
+
+.hyper_link_style {
+	color: #2f73b5;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+.hyper_link_style:hover {
+	border-bottom: 1px solid #2f73b5;
+}
