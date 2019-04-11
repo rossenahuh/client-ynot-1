@@ -4,56 +4,32 @@ import TodayReview from './TodayReview';
 import RecentActivity from './RecentActivity';
 import Search from './Search';
 import Footer from './Footer';
+import LoginButton from './LoginBotton';
 import configs from '../config/config.json';
 import './Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-	Button,
-	ButtonGroup,
-	Container,
-	Row,
-	Col,
-	CardColumns,
-	Spinner,
-	Modal,
-	Form,
-	FormGroup,
-	Label,
-	Input,
-	ModalHeader,
-	ModalBody,
-	ModalFooter
-} from 'reactstrap';
+import { Button, Container, Row, Col, CardColumns, Spinner } from 'reactstrap';
 
 const GOOGLEMAPAPIKEY = configs.GOOGLEMAPAPIKEY;
 class Main extends Component {
-	constructor() {
-		super();
-
+	constructor(props) {
+		super(props);
 		this.state = {
 			reviewOfTheDay: null,
 			recentActivityList: null,
-			searchInput: null,
-			searchResult: null,
+			// searchInput: null,
+			// searchResult: null,
 			error: null,
-			currentLoc: null,
-			loginModalOpen: false
+			currentLoc: null
 		};
-		this._fetchMatchingDataToSearchInput = this._fetchMatchingDataToSearchInput.bind(this);
-		this._triggerFetchWithClick = this._triggerFetchWithClick.bind(this);
-		this._loginModalToggle = this._loginModalToggle.bind(this);
+		// this._fetchMatchingDataToSearchInput = this._fetchMatchingDataToSearchInput.bind(this);
+		// this._triggerFetchWithClick = this._triggerFetchWithClick.bind(this);
 	}
 
 	componentDidMount() {
 		this._getTodayReview();
 		this._getTop9RecentActivities();
 		this._triggerFetchRestaurantsNearby();
-	}
-
-	_loginModalToggle() {
-		this.setState((prevState) => ({
-			loginModalOpen: !prevState.loginModalOpen
-		}));
 	}
 
 	_getTop9RecentActivities() {
@@ -72,30 +48,32 @@ class Main extends Component {
 		});
 	}
 
-	_updateSearchInput(e) {
-		this.setState({
-			searchInput: e.target.value
-		});
-	}
-
-	_fetchMatchingDataToSearchInput() {
-		let location = this.state.searchInput;
-		fetch(`http://localhost:3002/api/restaurants?district=${location}`).then((res) => res.json()).then((json) => {
-			this.setState({
-				searchResult: json
-			});
-		});
-	}
-	_triggerFetchWithClick() {
-		this._fetchMatchingDataToSearchInput();
-	}
-	_triggerFetchWithEnter(e) {
-		// console.log(e.key);
-		const { history } = this.props;
-		if (e.key === 'Enter') {
-			history.push(`/search/${this.state.searchInput}`);
-		}
-	}
+	// _updateSearchInput(e) {
+	// 	this.setState({
+	// 		searchInput: e.target.value
+	// 	});
+	// }
+	//
+	// _fetchMatchingDataToSearchInput() {
+	// 	let location = this.state.searchInput;
+	// 	fetch(`http://localhost:3002/api/restaurants?district=${location}`).then((res) => res.json()).then((json) => {
+	// 		this.setState({
+	// 			searchResult: json
+	// 		});
+	// 	});
+	// }
+	// _triggerFetchWithClick() {
+	// 	// this._fetchMatchingDataToSearchInput();
+	// 	const history = this.props.history;
+	// 	history.push(`/search/${this.state.searchInput}`);
+	// }
+	// _triggerFetchWithEnter(e) {
+	// 	// console.log(e.key);
+	// 	const { history } = this.props;
+	// 	if (e.key === 'Enter') {
+	// 		history.push(`/search/${this.state.searchInput}`);
+	// 	}
+	// }
 
 	_getAddressOfCurrentLocation(lat, lon) {
 		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${GOOGLEMAPAPIKEY}`)
@@ -117,7 +95,7 @@ class Main extends Component {
 		);
 	};
 	render() {
-		const { reviewOfTheDay, recentActivityList, searchResult, currentLoc, loginModalOpen } = this.state;
+		const { reviewOfTheDay, recentActivityList, currentLoc } = this.state;
 		const { history } = this.props;
 		return reviewOfTheDay && recentActivityList ? (
 			<Container className="Main-container" fluid>
@@ -128,49 +106,7 @@ class Main extends Component {
 							<Col className="Main-nav-menu">Event</Col>
 							<Col className="Main-nav-menu">Talk</Col>
 						</Row>
-						<Row>
-							<ButtonGroup>
-								<Button size="sm" onClick={this._loginModalToggle} color="danger">
-									Log In
-								</Button>
-								<Button size="sm" color="danger">
-									Sign Up
-								</Button>
-							</ButtonGroup>
-							<Modal isOpen={loginModalOpen} toggle={this._loginModalToggle}>
-								<ModalHeader>Log In</ModalHeader>
-								<ModalBody>
-									<Form>
-										<FormGroup>
-											<Label for="exampleEmail">Email</Label>
-											<Input
-												type="email"
-												name="email"
-												id="exampleEmail"
-												placeholder="yelp-seoul@gamil.com"
-											/>
-										</FormGroup>
-										<FormGroup>
-											<Label for="examplePassword">Password</Label>
-											<Input
-												type="password"
-												name="password"
-												id="examplePassword"
-												placeholder="password placeholder"
-											/>
-										</FormGroup>
-									</Form>
-								</ModalBody>
-								<ModalFooter>
-									<Button color="danger" onClick={this.toggle}>
-										Log In
-									</Button>{' '}
-									<Button color="secondary" onClick={this.toggle}>
-										Cancel
-									</Button>
-								</ModalFooter>
-							</Modal>
-						</Row>
+						<LoginButton />
 					</Col>
 					<Col className="Main-logo">
 						<img
@@ -180,10 +116,11 @@ class Main extends Component {
 					</Col>
 					<Col className="Main-SearchBar">
 						<Search
-							onChange={(e) => this._updateSearchInput(e)}
-							onClick={this._triggerFetchWithClick}
-							onKeyPress={(e) => this._triggerFetchWithEnter(e)}
-							searchInput={this.state.searchInput}
+							history={history}
+							// onChange={(e) => this._updateSearchInput(e)}
+							// onClick={this._triggerFetchWithClick}
+							// onKeyPress={(e) => this._triggerFetchWithEnter(e)}
+							// searchInput={this.state.searchInput}
 						/>{' '}
 						<Button
 							color="danger"
@@ -196,20 +133,6 @@ class Main extends Component {
 						</Button>
 					</Col>
 				</Col>
-				{searchResult ? (
-					searchResult.map((restaurant) => (
-						<Col>
-							<span>
-								<img src={restaurant.photo} alt={restaurant.name} />
-							</span>
-							<span>
-								<div>{restaurant.name}</div>
-								<div>별점</div>
-								<div>comment::: {restaurant.reviewID}</div>
-							</span>
-						</Col>
-					))
-				) : null}
 				<Col className="LR-wrapper">
 					<LocationRecommendation />
 				</Col>
