@@ -17,13 +17,9 @@ class Main extends Component {
 		this.state = {
 			reviewOfTheDay: null,
 			recentActivityList: null,
-			// searchInput: null,
-			// searchResult: null,
 			error: null,
 			currentLoc: null
 		};
-		// this._fetchMatchingDataToSearchInput = this._fetchMatchingDataToSearchInput.bind(this);
-		// this._triggerFetchWithClick = this._triggerFetchWithClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -47,33 +43,6 @@ class Main extends Component {
 			});
 		});
 	}
-
-	// _updateSearchInput(e) {
-	// 	this.setState({
-	// 		searchInput: e.target.value
-	// 	});
-	// }
-	//
-	// _fetchMatchingDataToSearchInput() {
-	// 	let location = this.state.searchInput;
-	// 	fetch(`http://localhost:3002/api/restaurants?district=${location}`).then((res) => res.json()).then((json) => {
-	// 		this.setState({
-	// 			searchResult: json
-	// 		});
-	// 	});
-	// }
-	// _triggerFetchWithClick() {
-	// 	// this._fetchMatchingDataToSearchInput();
-	// 	const history = this.props.history;
-	// 	history.push(`/search/${this.state.searchInput}`);
-	// }
-	// _triggerFetchWithEnter(e) {
-	// 	// console.log(e.key);
-	// 	const { history } = this.props;
-	// 	if (e.key === 'Enter') {
-	// 		history.push(`/search/${this.state.searchInput}`);
-	// 	}
-	// }
 
 	_getAddressOfCurrentLocation(lat, lon) {
 		fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${GOOGLEMAPAPIKEY}`)
@@ -115,13 +84,7 @@ class Main extends Component {
 						/>
 					</Col>
 					<Col className="Main-SearchBar">
-						<Search
-							history={history}
-							// onChange={(e) => this._updateSearchInput(e)}
-							// onClick={this._triggerFetchWithClick}
-							// onKeyPress={(e) => this._triggerFetchWithEnter(e)}
-							// searchInput={this.state.searchInput}
-						/>{' '}
+						<Search history={history} />{' '}
 						<Button
 							color="danger"
 							onClick={() => {

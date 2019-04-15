@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Main from './Main_Page/Main';
 import RestaurantInfo from './Restaurant_Page/RestaurantInfo';
 import SearchResult from './SearchResult_Page/SearchResult';
-import Review from './review';
+import WriteReview from './WriteReview/WriteReview';
 
 const App = () => {
 	return (
@@ -11,8 +11,8 @@ const App = () => {
 			<div>
 				<Route exact path="/" component={Main} />
 				<Route path="/search/:location" component={SearchResult} />
-				<Route path="/restaurant/:restaurantID" component={RestaurantInfo} />
-				<Route path="/review/:restaurantID" component={Review} />
+				<Route path="/info/:restaurantID" component={RestaurantInfo} />
+				<Route path="/writereview/:restaurantID" component={WriteReview} />
 			</div>
 		</Router>
 	);

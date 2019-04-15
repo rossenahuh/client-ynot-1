@@ -5,28 +5,21 @@ import Header from './Header';
 import Footer from '../Main_Page/Footer';
 import RestaurantList from './RestaurantList';
 import Map from './Map';
+import './SearchResult.css';
 class SearchResult extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			current: this.props.match.params.location
-		};
-	}
 	render() {
-		const { current } = this.state;
 		const { history } = this.props;
-		console.log('props:::: ', this.props);
+		const location = this.props.match.params.location;
 		return (
 			<Container className="container">
 				<Header history={history} />
 				<Row>
 					<Col>
-						<RestaurantList location={current} />
+						<RestaurantList location={location} />
 					</Col>
-					<Map />
 				</Row>
 				<Footer />
+				<Map />
 			</Container>
 		);
 	}

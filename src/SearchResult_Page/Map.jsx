@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
 
 import configs from '../config/config.json';
 
 const GOOGLEMAPAPIKEY = configs.GOOGLEMAPAPIKEY;
 
-export class Map extends Component {
+class Map extends Component {
 	componentDidMount() {
 		this.renderMap();
+		console.log('map mouted');
 	}
 
 	renderMap = () => {
@@ -45,9 +45,9 @@ export class Map extends Component {
 
 	render() {
 		return (
-			<main>
-				<div id="map" />
-			</main>
+			// <main>
+			<div id="map" />
+			// </main>
 		);
 	}
 }

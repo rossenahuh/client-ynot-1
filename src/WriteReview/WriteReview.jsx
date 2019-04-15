@@ -44,7 +44,7 @@ class Reviews extends Component {
 				<button
 					onClick={(e) => {
 						this.onSubmit(e);
-						history.push(`/restaurant/${match.params.restaurantID}`);
+						history.push(`/info/${match.params.restaurantID}`);
 					}}
 				>
 					Post Review
