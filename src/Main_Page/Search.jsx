@@ -33,7 +33,6 @@ class Search extends Component {
 		history.push(`/search/${this.state.searchInput}`);
 	};
 	render() {
-		const { searchInput } = this.state;
 		return (
 			<ButtonGroup>
 				<input
@@ -46,11 +45,9 @@ class Search extends Component {
 					placeholder=" Near"
 				/>
 
-				<Link to={`/search/${searchInput}`}>
-					<Button className="search-button" color="danger" onClick={() => this._handleClick}>
-						<Icon icon={search} />
-					</Button>
-				</Link>
+				<Button className="search-button" color="danger" onClick={() => this._handleClick}>
+					<Icon icon={search} />
+				</Button>
 			</ButtonGroup>
 		);
 	}

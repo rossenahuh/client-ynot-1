@@ -14,6 +14,8 @@ class RestaurantInfo extends Component {
 		this.state = {
 			current: null
 		};
+
+		this._HandleWriteReview = this._HandleWriteReview.bind(this);
 	}
 
 	_fetchRestaurantInfo(id) {
@@ -30,6 +32,10 @@ class RestaurantInfo extends Component {
 		this._fetchRestaurantInfo(this.props.match.params.restaurantID);
 	}
 
+	_HandleWriteReview() {
+		const restaurantID = this.state.current.id;
+		this.props.history.push(`/writereview/${restaurantID}`);
+	}
 	render() {
 		const { current } = this.state;
 		const { history } = this.props;
@@ -50,7 +56,7 @@ class RestaurantInfo extends Component {
 							<div>{current.reviewNum}</div>
 						</Row>
 					</Col>
-					<Button>Write review</Button>
+					<Button onClick={this._HandleWriteReview}>Write review</Button>
 					<Button>Add Photo</Button>
 				</Row>
 				<Row>
