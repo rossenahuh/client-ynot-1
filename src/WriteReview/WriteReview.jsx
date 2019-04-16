@@ -3,6 +3,7 @@ import { Col, Row, Container, Button, Link } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WrtieReviewHeader from './WriteReviewHeader';
 import StarRatingComponent from 'react-star-rating-component';
+import axios from 'axios';
 
 export class WriteReview extends Component {
 	constructor(props) {
@@ -12,8 +13,7 @@ export class WriteReview extends Component {
 			comment: '',
 			info: null,
 			rating: 0,
-			file: '',
-			imageUrl: ''
+			imgPath: null
 		};
 
 		this._fetchRestaurantInfo = this._fetchRestaurantInfo.bind(this);
@@ -52,20 +52,13 @@ export class WriteReview extends Component {
 			restaurantID: this.props.match.params.restaurantID,
 			comment: this.state.comment,
 			rating: this.state.rating,
-			photo: 'https://media-cdn.tripadvisor.com/media/photo-s/11/a3/8e/03/caption.jpg'
+			photo: this.state.imgPath
 		};
 
-		fetch('http://localhost:3002/api/reviews', {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json'
-			}
+		axios.post('http://localhost:3002/api/reviews', data).then((result) => {
+			console.log(result);
 		});
-
-		console.log('file::: ', this.fileInput.current.files[0].name);
-		console.log('imgURL::: ', this.state.imageUrl);
-		// this.props.history.push(`/info/${this.props.match.params.restaurantID}`);
+		this.props.history.push(`/info/${this.props.match.params.restaurantID}`);
 	}
 
 	_onStarClick(nextValue, prevValue, name) {
@@ -74,22 +67,22 @@ export class WriteReview extends Component {
 
 	_handleImageChange(e) {
 		e.preventDefault();
-
-		let reader = new FileReader();
 		let file = e.target.files[0];
+		// console.log(file);
+		let formData = new FormData();
 
-		reader.onloadend = () => {
+		formData.append('myImage', file);
+
+		axios.post('http://localhost:3002/api/reviews/upload', formData).then((result) => {
+			console.log('result::: ', result);
 			this.setState({
-				file: file,
-				imageUrl: reader.result
+				imgPath: result.data
 			});
-		};
-
-		reader.readAsDataURL(file);
+		});
 	}
 
 	render() {
-		const { info, rating, imageUrl } = this.state;
+		const { info, rating } = this.state;
 		return info ? (
 			<Container>
 				<WrtieReviewHeader />
@@ -107,7 +100,7 @@ export class WriteReview extends Component {
 						<div>Select your rating</div>
 					</Row>
 					<input onChange={this._changeComment} placeholder="write your comments" />
-					<input type="file" ref={this.fileInput} onChange={this._handleImageChange} />
+					<input type="file" onChange={this._handleImageChange} name="myImage" />
 					<Button onClick={this._postReview} color="danger">
 						Post Review
 					</Button>
