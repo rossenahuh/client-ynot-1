@@ -37,12 +37,10 @@ class LoginBotton extends Component {
 		return (
 			<Row>
 				<ButtonGroup>
-					<Button size="sm" onClick={this._loginModalToggle} color="danger">
+					<Button onClick={this._loginModalToggle} color="danger">
 						Log In
 					</Button>
-					<Button size="sm" color="danger">
-						Sign Up
-					</Button>
+					<Button color="danger">Sign Up</Button>
 				</ButtonGroup>
 				<Modal isOpen={loginModalOpen} toggle={this._loginModalToggle}>
 					<ModalHeader>Log In</ModalHeader>

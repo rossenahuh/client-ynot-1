@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Row, Container, Button, Link } from 'reactstrap';
+import { Col, Row, Container, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WrtieReviewHeader from './WriteReviewHeader';
 import StarRatingComponent from 'react-star-rating-component';
@@ -86,9 +87,9 @@ export class WriteReview extends Component {
 		return info ? (
 			<Container>
 				<WrtieReviewHeader />
-				{/* <Link to={`/info/${info.id}`}> */}
-				<h2>{info.name}</h2>
-				{/* </Link> */}
+				<Link to={`/info/${info.id}`}>
+					<h2>{info.name}</h2>
+				</Link>
 				<Col>
 					<Row>
 						<StarRatingComponent

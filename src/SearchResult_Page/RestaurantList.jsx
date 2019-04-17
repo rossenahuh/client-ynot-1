@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Spinner } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './RestaurantList.css';
+import StarRatingComponent from 'react-star-rating-component';
 
 class RestaurantList extends Component {
 	constructor(props) {
 		super(props);
-		// console.log('restaurantListPRops::: ', props);
 
 		this.state = {
 			currentList: [],
@@ -57,24 +57,28 @@ class RestaurantList extends Component {
 
 		const renderRes = currentRes.map((restaurant, index) => {
 			return (
-				<li key={index}>
+				<li className="restaurant-wrapper" key={index}>
 					{' '}
-					<Row key={restaurant.id}>
-						<img className="img" src={restaurant.src} alt={restaurant.name} />
-						<Col>
+					<Row className="restaurant-content-wrapper" key={restaurant.id}>
+						<Col className="padding-zero" xs="4">
+							<img className="img" src={restaurant.src} alt={restaurant.name} />
+						</Col>
+						<Col xs="8">
 							<Row>
-								<Col>1</Col>
 								<Link to={`/info/${restaurant.id}`}>
-									<Col>{restaurant.name}</Col>
+									<Col className="restaurant-name text-align-left padding-zero">
+										{restaurant.name}
+									</Col>
 								</Link>
-								<Col>{restaurant.contact}</Col>
+								<Col className="text-align-right padding-zero">{restaurant.contact}</Col>
 							</Row>
 							<Row>
-								<Col>{restaurant.averageRating}</Col>
-								<Col>{restaurant.numberOfReviews}</Col>
-								<Col>{restaurant.address}</Col>
+								<StarRatingComponent editing={false} starCount={5} value={restaurant.averageRating} />
+								<Col className="review-number">{restaurant.numberOfReviews} review</Col>
+
+								<Col className="text-align-right padding-zero">{restaurant.address}</Col>
 							</Row>
-							<Row>{restaurant.latestComment}</Row>
+							<Row className="comment">{restaurant.latestComment}</Row>
 						</Col>
 					</Row>
 				</li>
@@ -97,11 +101,16 @@ class RestaurantList extends Component {
 		// console.log('current restaurant list::: ', currentList);
 		return currentList.length ? (
 			<div>
-				<ul>{renderRes}</ul>
-				<ul id="page-numbers">{renderPageNumbers}</ul>
+				<ul className="padding-zero">{renderRes}</ul>
+				<Row className="pagination padding-zero">
+					<div>
+						Page {currentPage} of {pageNumbers.length}
+					</div>
+					<ul id="page-numbers">{renderPageNumbers}</ul>
+				</Row>
 			</div>
 		) : (
-			'loading...'
+			<Spinner color="danger" />
 		);
 	}
 }

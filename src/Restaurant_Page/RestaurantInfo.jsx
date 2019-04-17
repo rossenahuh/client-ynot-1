@@ -6,6 +6,7 @@ import Footer from '../Main_Page/Footer';
 import RecommendedReviews from './RecommendedReviews';
 import RestaurantMap from './RestaurantMap';
 import PhotoGroup from './PhotoGroup';
+import StarRatingComponent from 'react-star-rating-component';
 
 class RestaurantInfo extends Component {
 	constructor(props) {
@@ -52,8 +53,9 @@ class RestaurantInfo extends Component {
 					<Col>
 						<h2>{current.name}</h2>
 						<Row>
-							<div>{current.averageRating}</div>
-							<div>{current.reviewNum}</div>
+							<StarRatingComponent editing={false} starCount={5} value={current.averageRating} />
+
+							<div>{current.reviewNum} review</div>
 						</Row>
 					</Col>
 					<Button onClick={this._HandleWriteReview}>Write review</Button>

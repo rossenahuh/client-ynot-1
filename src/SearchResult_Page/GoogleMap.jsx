@@ -4,7 +4,7 @@ import configs from '../config/config.json';
 
 const GOOGLEMAPAPIKEY = configs.GOOGLEMAPAPIKEY;
 
-class Map extends Component {
+class GoogleMap extends Component {
 	componentDidMount() {
 		this.renderMap();
 		console.log('map mouted');
@@ -44,10 +44,11 @@ class Map extends Component {
 	};
 
 	render() {
+		console.log('render map');
 		return (
-			// <main>
-			<div id="map" />
-			// </main>
+			<div className="map-wrapper">
+				<div id="map" />
+			</div>
 		);
 	}
 }
@@ -61,4 +62,4 @@ function loadScript(url) {
 	index.parentNode.insertBefore(script, index);
 }
 
-export default Map;
+export default GoogleMap;

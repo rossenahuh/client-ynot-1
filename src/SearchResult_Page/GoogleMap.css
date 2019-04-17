@@ -1,6 +1,13 @@
+/* .map-wrapper {
+	position: relative;
+} */
+
 #map {
 	height: 300px;
 	width: 300px;
+	/* position: absolute; */
+	z-index: 1;
+	overflow: visible;
 }
 /* Optional: Makes the sample page fill the window. */
 /* html,
