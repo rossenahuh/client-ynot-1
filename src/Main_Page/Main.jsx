@@ -5,6 +5,8 @@ import RecentActivity from './RecentActivity';
 import Search from './Search';
 import Footer from './Footer';
 import LoginButton from './LoginBotton';
+import SignupButton from './SignupBotton';
+import LoginSignupBotton from './LoginSignupButton';
 import configs from '../config/config.json';
 import './Main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -75,7 +77,7 @@ class Main extends Component {
 							<Col className="Main-nav-menu">Event</Col>
 							<Col className="Main-nav-menu">Talk</Col>
 						</Row>
-						<LoginButton />
+						<LoginSignupBotton history={history} />
 					</Col>
 					<Col className="Main-logo">
 						<img

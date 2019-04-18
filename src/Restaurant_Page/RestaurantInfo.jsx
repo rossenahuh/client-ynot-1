@@ -7,6 +7,7 @@ import RecommendedReviews from './RecommendedReviews';
 import RestaurantMap from './RestaurantMap';
 import PhotoGroup from './PhotoGroup';
 import StarRatingComponent from 'react-star-rating-component';
+import './RestaurantInfo.css';
 
 class RestaurantInfo extends Component {
 	constructor(props) {
@@ -47,32 +48,34 @@ class RestaurantInfo extends Component {
 
 		console.log(current);
 		return this.state.current ? (
-			<Container>
+			<Container className="container" fluid>
 				<Header history={history} />
-				<Row>
-					<Col>
-						<h2>{current.name}</h2>
-						<Row>
-							<StarRatingComponent editing={false} starCount={5} value={current.averageRating} />
+				<Col className="body-wrapper-full">
+					<Row className="clearfix-title">
+						<Col>
+							<h2>{current.name}</h2>
+							<Row>
+								<StarRatingComponent editing={false} starCount={5} value={current.averageRating} />
 
-							<div>{current.reviewNum} review</div>
-						</Row>
-					</Col>
-					<Button onClick={this._HandleWriteReview}>Write review</Button>
-					<Button>Add Photo</Button>
-				</Row>
-				<Row>
-					<Col>
-						<RestaurantMap />
-						<div>{current.address}</div>
-						<div>{current.contact}</div>
-					</Col>
-					<Row>
-						<PhotoGroup reviewList={current.reviewList} />
+								<div>{current.reviewNum} review</div>
+							</Row>
+						</Col>
+						<Button onClick={this._HandleWriteReview}>Write review</Button>
+						<Button>Add Photo</Button>
 					</Row>
-				</Row>
-				<RecommendedReviews reviewList={current.reviewList} />
-				<Footer />
+					<Row className="clearfix-subtitle">
+						<Col>
+							<RestaurantMap />
+							<div>{current.address}</div>
+							<div>{current.contact}</div>
+						</Col>
+						<Row>
+							<PhotoGroup reviewList={current.reviewList} />
+						</Row>
+					</Row>
+					<RecommendedReviews reviewList={current.reviewList} />
+				</Col>
+				<Footer />clearfix-subtitle
 			</Container>
 		) : (
 			<div>loading...</div>
