@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, ModalFooter, Alert } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, ModalFooter } from 'reactstrap';
+import jwt_decode from 'jwt-decode';
 const axios = require('axios');
 
 class LoginBotton extends Component {
@@ -10,7 +11,7 @@ class LoginBotton extends Component {
 			loginModalOpen: false,
 			email: '',
 			pw: '',
-			isLoggedin: false
+			isLoggedin: 'init'
 		};
 
 		this._loginModalToggle = this._loginModalToggle.bind(this);
@@ -41,10 +42,12 @@ class LoginBotton extends Component {
 	}
 
 	_onClickLogout() {
-		this.setState((prevState) => ({
-			isLoggedin: !prevState.isLoggedin
-		}));
+		this.setState({
+			isLoggedin: false
+		});
 
+		localStorage.removeItem('userToken');
+		console.log('userToken after logout::: ', localStorage.userToken);
 		this.props.history.push('/');
 	}
 	_onClickLogin() {
@@ -55,13 +58,27 @@ class LoginBotton extends Component {
 
 		axios.post('http://localhost:3002/user/signin', userData).then((result) => {
 			if (result) {
-				this.setState((prevState) => ({
-					isLoggedin: !prevState.isLoggedin
-				}));
+				this.setState({
+					isLoggedin: true
+				});
 				this._loginModalToggle();
-				// localStorage.setItem
+				localStorage.setItem('userToken', result.data);
+				// const decoded = jwt_decode(result.data);
+				// console.log('decoded::: ', decoded);
 			}
 		});
+	}
+
+	componentDidMount() {
+		if (localStorage.userToken) {
+			this.setState({
+				isLoggedin: true
+			});
+		} else {
+			this.setState({
+				isLoggedin: false
+			});
+		}
 	}
 
 	render() {
@@ -76,7 +93,9 @@ class LoginBotton extends Component {
 			</Button>
 		);
 
-		return (
+		return isLoggedin === 'init' ? (
+			<div>기다려</div>
+		) : (
 			<div>
 				{LoginOrLogoutBotton}
 				<Modal isOpen={loginModalOpen} toggle={this._loginModalToggle}>
